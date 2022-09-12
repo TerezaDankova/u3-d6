@@ -22,7 +22,7 @@ const deleteComment = async (asin) => {
 
 
 const SingleComment = ({comment}) => (
-    <ListGroup.Item className="mt-2" style={{backgroundColor: '#F3F2F1'}}>
+    <ListGroup.Item className="mt-2 mb-2 ml-5" style={{backgroundColor: '#F3F2F1'}}>
         <span className="mr-2"style={{fontWeight: 'bold'}}>COMMENT:</span><br />{comment.comment}<br />
         <Button variant="danger" className="ml-2 mt-2" onClick={() => deleteComment(comment._id)}>DELETE</Button>
     </ListGroup.Item>

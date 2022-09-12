@@ -7,12 +7,24 @@ class AddComment extends Component {
         comment: {
             comment: '',
             rate: 1,
-            elementId: this.props.asin
+            elementId: null
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.asin !== this.props.asin) {
+            this.setState({
+                comment: {
+                    ...this.state.comment,
+                    elementId: this.props.asin
+                }
+            })
         }
     }
 
     commentSending = async (event) => {
         event.preventDefault()
+
         try{
             let response = await fetch('https://striveschool-api.herokuapp.com/api/comments', {
                 method: 'POST',
@@ -23,7 +35,8 @@ class AddComment extends Component {
                 }
             })
             if(response.ok){
-            alert('Comment was sent!')
+                console.log("comment was added")
+                alert('Comment was sent!')
 
             } else {
                 console.log('error')
@@ -34,41 +47,54 @@ class AddComment extends Component {
         }
     }
 
+    
+       
+      
+
+
     render() {
         return (
-          <Form onSubmit={this.commentSending}>
-            <Form.Group className="mt-2" controlId="formBasicEmail">
-                <Form.Label style={{fontWeight: 'bold'}}>Comment the book here...</Form.Label>
-                <Form.Control type="text" placeholder="Insert your comment..." 
-                 value={this.state.comment.comment}
-                 onChange= { event => this.setState({
-                    comment:{
-                        ...this.state.comment,
-                        comment: event.target.value
-                    }
-                 })}
-                 />
-            </Form.Group>
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label className="text-left" style={{fontWeight: 'bold'}}>Rating...</Form.Label>
-                <Form.Control as="select" value={this.state.comment.rate}
-                              onChange={event => this.setState({
-                              comment:{
-                              ...this.state.comment,
-                              rate: event.target.value
-                            }
-                })}>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                </Form.Control>
-            </Form.Group>
-            <Button variant="secondary" type="submit">
-                Submit
-            </Button>
-          </Form>
+        <div className="ml-5 ">       
+            <Form onSubmit={this.commentSending}>
+                <Form.Group className="mt-2" controlId="formBasicEmail">
+                    <Form.Label 
+                    style={{fontWeight: 'bold'}}>
+                        Comment the book here...</Form.Label>
+                    <Form.Control 
+                    type="text" 
+                    placeholder="Insert your comment..." 
+                    value={this.state.comment.comment}
+                    onChange= { event => this.setState({
+                        comment:{
+                            ...this.state.comment,
+                            comment: event.target.value
+                        }
+                    })}
+                    />
+                </Form.Group>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label className="text-left" style={{fontWeight: 'bold'}}>Rating...</Form.Label>
+                    <Form.Control 
+                    as="select"
+                    value={this.state.comment.rate}
+                    onChange={event => this.setState({
+                                comment:{
+                                ...this.state.comment,
+                                rate: event.target.value
+                                }
+                    })}>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    </Form.Control>
+                </Form.Group>
+                <Button variant="secondary" type="submit">
+                    Submit
+                </Button>
+            </Form>
+        </div> 
         )
 
     }
