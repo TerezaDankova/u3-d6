@@ -37,6 +37,7 @@ class AddComment extends Component {
             if(response.ok){
                 console.log("comment was added")
                 alert('Comment was sent!')
+                this.props.didAddComment()
 
             } else {
                 console.log('error')
